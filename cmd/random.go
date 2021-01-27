@@ -20,7 +20,9 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"math/rand"
 	"net/http"
+	"time"
 
 	"github.com/spf13/cobra"
 )
@@ -73,8 +75,8 @@ func getRandomJoke() {
 }
 
 func getRandomJokeWithTerm(jokeTerm string) {
-	_, results := getJokeDataWithTerm(jokeTerm)
-	fmt.Println(results)
+	total, results := getJokeDataWithTerm(jokeTerm)
+	randomiseJokeList(total, results)
 }
 
 func getJokeData(baseAPI string) []byte {
@@ -119,4 +121,19 @@ func getJokeDataWithTerm(jokeTerm string) (totalJokes int, jokeList []Joke) {
 	}
 
 	return jokeListRaw.TotalJokes, jokes
+}
+
+func randomiseJokeList(length int, jokeList []Joke) {
+	rand.Seed(time.Now().Unix())
+
+	min := 0
+	max := length - 1
+
+	if length <= 0 {
+		err := fmt.Errorf("No jokes found with this term")
+		fmt.Println(err.Error())
+	} else {
+		randomNum := min + rand.Intn(max-min)
+		fmt.Println(jokeList[randomNum].Joke)
+	}
 }
