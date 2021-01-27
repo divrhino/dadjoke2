@@ -102,7 +102,7 @@ func getJokeData(baseAPI string) []byte {
 	return responseBytes
 }
 
-func getJokeDataWithTerm(jokeTerm string) {
+func getJokeDataWithTerm(jokeTerm string) (totalJokes int, jokeList []Joke) {
 	url := fmt.Sprintf("https://icanhazdadjoke.com/search?term=%s", jokeTerm)
 	responseBytes := getJokeData(url)
 
@@ -116,4 +116,6 @@ func getJokeDataWithTerm(jokeTerm string) {
 	if err := json.Unmarshal(jokeListRaw.Results, &jokes); err != nil {
 		log.Printf("Could not unmarshal reponseBytes. %v", err)
 	}
+
+	return jokeListRaw.TotalJokes, jokes
 }
