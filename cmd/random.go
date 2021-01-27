@@ -59,6 +59,10 @@ func getRandomJoke() {
 	fmt.Println(string(joke.Joke))
 }
 
+func getRandomJokeWithTerm(jokeTerm string) {
+	log.Printf("You searched for a joke with the term: %v", jokeTerm)
+}
+
 func getJokeData(baseAPI string) []byte {
 	request, err := http.NewRequest(
 		http.MethodGet,
