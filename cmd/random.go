@@ -103,5 +103,6 @@ func getJokeData(baseAPI string) []byte {
 }
 
 func getJokeDataWithTerm(jokeTerm string) {
-
+	url := fmt.Sprintf("https://icanhazdadjoke.com/search?term=%s", jokeTerm)
+	responseBytes := getJokeData(url)
 }
