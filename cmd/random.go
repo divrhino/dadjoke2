@@ -120,3 +120,7 @@ func getJokeDataWithTerm(jokeTerm string) (totalJokes int, jokeList []Joke) {
 
 	return jokeListRaw.TotalJokes, jokes
 }
+
+func randomiseJokeList(length int, jokeList []Joke) {
+
+}
