@@ -101,3 +101,7 @@ func getJokeData(baseAPI string) []byte {
 
 	return responseBytes
 }
+
+func getJokeDataWithTerm(jokeTerm string) {
+
+}
