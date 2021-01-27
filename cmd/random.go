@@ -53,6 +53,13 @@ type Joke struct {
 	Status int    `json:"status"`
 }
 
+type SearchResult struct {
+	Results    json.RawMessage `json:"results"`
+	SearchTerm string          `json:"search_term"`
+	Status     int             `json:"status"`
+	TotalJokes int             `json:"total_jokes"`
+}
+
 func getRandomJoke() {
 	url := "https://icanhazdadjoke.com/"
 	responseBytes := getJokeData(url)
@@ -66,7 +73,8 @@ func getRandomJoke() {
 }
 
 func getRandomJokeWithTerm(jokeTerm string) {
-	log.Printf("You searched for a joke with the term: %v", jokeTerm)
+	_, results := getJokeDataWithTerm(jokeTerm)
+	fmt.Println(results)
 }
 
 func getJokeData(baseAPI string) []byte {
@@ -93,4 +101,22 @@ func getJokeData(baseAPI string) []byte {
 	}
 
 	return responseBytes
+}
+
+func getJokeDataWithTerm(jokeTerm string) (totalJokes int, jokeList []Joke) {
+	url := fmt.Sprintf("https://icanhazdadjoke.com/search?term=%s", jokeTerm)
+	responseBytes := getJokeData(url)
+
+	jokeListRaw := SearchResult{}
+
+	if err := json.Unmarshal(responseBytes, &jokeListRaw); err != nil {
+		log.Printf("Could not unmarshal reponseBytes. %v", err)
+	}
+
+	jokes := []Joke{}
+	if err := json.Unmarshal(jokeListRaw.Results, &jokes); err != nil {
+		log.Printf("Could not unmarshal reponseBytes. %v", err)
+	}
+
+	return jokeListRaw.TotalJokes, jokes
 }
