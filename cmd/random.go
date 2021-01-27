@@ -31,12 +31,20 @@ var randomCmd = &cobra.Command{
 	Short: "Get a random dad joke",
 	Long:  `This command fetches a random dad joke from the icanhazdadjoke api`,
 	Run: func(cmd *cobra.Command, args []string) {
-		getRandomJoke()
+		jokeTerm, _ := cmd.Flags().GetString("term")
+
+		if jokeTerm != "" {
+			getRandomJokeWithTerm(jokeTerm)
+		} else {
+			getRandomJoke()
+		}
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(randomCmd)
+
+	randomCmd.PersistentFlags().String("term", "", "A search term for a dad joke")
 }
 
 type Joke struct {
@@ -55,6 +63,10 @@ func getRandomJoke() {
 	}
 
 	fmt.Println(string(joke.Joke))
+}
+
+func getRandomJokeWithTerm(jokeTerm string) {
+	log.Printf("You searched for a joke with the term: %v", jokeTerm)
 }
 
 func getJokeData(baseAPI string) []byte {
