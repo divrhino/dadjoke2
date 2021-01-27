@@ -111,4 +111,9 @@ func getJokeDataWithTerm(jokeTerm string) {
 	if err := json.Unmarshal(responseBytes, &jokeListRaw); err != nil {
 		log.Printf("Could not unmarshal reponseBytes. %v", err)
 	}
+
+	jokes := []Joke{}
+	if err := json.Unmarshal(jokeListRaw.Results, &jokes); err != nil {
+		log.Printf("Could not unmarshal reponseBytes. %v", err)
+	}
 }
