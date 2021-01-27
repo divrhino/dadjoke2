@@ -73,7 +73,8 @@ func getRandomJoke() {
 }
 
 func getRandomJokeWithTerm(jokeTerm string) {
-	log.Printf("You searched for a joke with the term: %v", jokeTerm)
+	_, results := getJokeDataWithTerm(jokeTerm)
+	fmt.Println(results)
 }
 
 func getJokeData(baseAPI string) []byte {
