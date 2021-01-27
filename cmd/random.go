@@ -53,6 +53,13 @@ type Joke struct {
 	Status int    `json:"status"`
 }
 
+type SearchResult struct {
+	Results    json.RawMessage `json:"results"`
+	SearchTerm string          `json:"search_term"`
+	Status     int             `json:"status"`
+	TotalJokes int             `json:"total_jokes"`
+}
+
 func getRandomJoke() {
 	url := "https://icanhazdadjoke.com/"
 	responseBytes := getJokeData(url)
