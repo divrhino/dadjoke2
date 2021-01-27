@@ -75,8 +75,8 @@ func getRandomJoke() {
 }
 
 func getRandomJokeWithTerm(jokeTerm string) {
-	_, results := getJokeDataWithTerm(jokeTerm)
-	fmt.Println(results)
+	total, results := getJokeDataWithTerm(jokeTerm)
+	randomiseJokeList(total, results)
 }
 
 func getJokeData(baseAPI string) []byte {
